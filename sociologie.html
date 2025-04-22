@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcasts de sociologie</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --background: #0f0f0f;
+            --surface: #171717;
+            --surface-hover: #222222;
+            --primary: #8c52ff;
+            --primary-hover: #9d6aff;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+            --border: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-variant: small-caps;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            padding: 1rem 2rem;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-small {
+            height: 40px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border);
+            background-color: var(--surface);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(to bottom, #000000, var(--background));
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+        }
+
+        .logo {
+            width: 200px;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 20px rgba(140, 82, 255, 0.4));
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .episodes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .episodes-title {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        .episodes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .episode {
+            background-color: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .episode:hover {
+            background-color: var(--surface-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary);
+        }
+
+        .episode-image {
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, var(--primary), #444444);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .episode-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            opacity: 0.7;
+        }
+
+        .episode-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .episode-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .episode-meta {
+            display: flex;
+            justify-content: flex-end;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .episode-duration {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .episode-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .audio-player {
+            width: 100%;
+            border-radius: 30px;
+        }
+
+        .playback-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .speed-btn {
+            background-color: var(--surface);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .speed-btn.active {
+            background-color: var(--primary);
+            color: var(--text);
+            border-color: var(--primary);
+        }
+
+        .speed-btn:hover {
+            background-color: var(--surface-hover);
+        }
+
+        .download-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            align-self: flex-end;
+        }
+
+        .download-button:hover {
+            background-color: var(--surface-hover);
+            color: var(--text);
+        }
+
+        .download-icon {
+            width: 14px;
+            height: 14px;
+            margin-right: 4px;
+        }
+
+        .player {
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .player-episode {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .player-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, var(--primary), #444444);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .player-info {
+            flex-grow: 1;
+            max-width: 300px;
+        }
+
+        .player-title {
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-series {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 2;
+        }
+
+        .control-button {
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-pause {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player-progress {
+            flex-grow: 1;
+            height: 4px;
+            background-color: #444444;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .progress-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 30%;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .player-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .player-speed {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 10px;
+        }
+        
+        .speed-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .speed-dropdown {
+            background-color: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .player-volume {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 150px;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            background-color: #444444;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .volume-level {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 70%;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        @media (max-width: 900px) {
+            .episodes {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .player {
+                flex-wrap: wrap;
+                padding: 0.8rem 1rem;
+            }
+
+            .player-episode {
+                width: 100%;
+                order: 1;
+            }
+
+            .player-controls {
+                width: 100%;
+                order: 2;
+                margin-top: 0.8rem;
+            }
+
+            .player-volume {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 0.8rem 1rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .episodes {
+                grid-template-columns: 1fr;
+            }
+
+            .episodes-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .player-time {
+                display: none;
+            }
+        }
+    </style>
+    <script>
+        // Script pour le contrôle de vitesse de lecture
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fonction pour les boutons de vitesse d'épisode
+            const setupSpeedButtons = (speedBtns, audioPlayer) => {
+                speedBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const speed = parseFloat(this.dataset.speed);
+                        audioPlayer.playbackRate = speed;
+                        
+                        // Mettre à jour l'état actif
+                        speedBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+            };
+            
+            // Configuration pour chaque épisode
+            document.querySelectorAll('.episode').forEach(episode => {
+                const audioPlayer = episode.querySelector('audio');
+                const speedBtns = episode.querySelectorAll('.speed-btn');
+                setupSpeedButtons(speedBtns, audioPlayer);
+            });
+            
+            // Configuration pour le lecteur global
+            const globalSpeedDropdown = document.getElementById('global-speed');
+            const currentlyPlaying = document.querySelector('.player audio');
+            
+            if (globalSpeedDropdown && currentlyPlaying) {
+                globalSpeedDropdown.addEventListener('change', function() {
+                    currentlyPlaying.playbackRate = parseFloat(this.value);
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="/">
+                <img src="https://content.stucom.tech/isfsc/comb1/podcasts/podcast-logo-short.jpg" alt="Logo" class="logo-small">
+            </a>
+            <div class="nav-menu">
+                <a href="/sociologie" class="nav-item active">socio</a>
+                <a href="/economie-politique" class="nav-item">écopol</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <img src="https://content.stucom.tech/isfsc/comb1/socio/podcasts/logo-podcast.png" alt="logo podcast" class="logo">
+        <h1 class="hero-title">podcasts de sociologie</h1>
+        <p class="hero-subtitle">explorez les fondements de la pensée sociologique à travers des analyses des grands théoriciens et des concepts clés</p>
+    </section>
+
+    <div class="container">
+        <div class="episodes-header">
+            <h2 class="episodes-title">tous les épisodes</h2>
+        </div>
+
+        <div class="episodes">
+            <div class="episode">
+                <div class="episode-image">
+                    <span class="episode-number">01</span>
+                </div>
+                <div class="episode-content">
+                    <h3 class="episode-title">le regard sociologique</h3>
+                    <div class="episode-meta">
+                        <div class="episode-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg>
+                            23:26
+                        </div>
+                    </div>
+                    <div class="episode-actions">
+                        <audio controls class="audio-player">
+                            <source src="https://content.stucom.tech/isfsc/comb1/socio/podcasts/1-introduction-le-regard-sociologique.mp3" type="audio/mpeg">
+                            Votre navigateur ne supporte pas l'élément audio.
+                        </audio>
+                        <div class="playback-controls">
+                            <div class="speed-control">
+                                <span class="speed-btn active" data-speed="1">1x</span>
+                                <span class="speed-btn" data-speed="1.25">1.25x</span>
+                                <span class="speed-btn" data-speed="1.5">1.5x</span>
+                                <span class="speed-btn" data-speed="1.75">1.75x</span>
+                            </div>
+                            <a href="https://content.stucom.tech/isfsc/comb1/socio/podcasts/1-introduction-le-regard-sociologique.mp3" download class="download-button">
+                                <svg class="download-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                dl
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="episode">
+                <div class="episode-image">
+                    <span class="episode-number">02</span>
+                </div>
+                <div class="episode-content">
+                    <h3 class="episode-title">durkheim et les causes sociales du suicide</h3>
+                    <div class="episode-meta">
+                        <div class="episode-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg>
+                            20:10
+                        </div>
+                    </div>
+                    <div class="episode-actions">
+                        <audio controls class="audio-player">
+                            <source src="https://content.stucom.tech/isfsc/comb1/socio/podcasts/2-introduction-durkheim-et-les-causes-sociales-du-suicide.mp3" type="audio/mpeg">
+                            Votre navigateur ne supporte pas l'élément audio.
+                        </audio>
+                        <div class="playback-controls">
+                            <div class="speed-control">
+                                <span class="speed-btn active" data-speed="1">1x</span>
+                                <span class="speed-btn" data-speed="1.25">1.25x</span>
+                                <span class="speed-btn" data-speed="1.5">1.5x</span>
+                                <span class="speed-btn" data-speed="1.75">1.75x</span>
+                            </div>
+                            <a href="https://content.stucom.tech/isfsc/comb1/socio/podcasts/2-introduction-durkheim-et-les-causes-sociales-du-suicide.mp3" download class="download-button">
+                                <svg class="download-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                dl
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="episode">
+                <div class="episode-image">
+                    <span class="episode-number">03</span>
+                </div>
+                <div class="episode-content">
+                    <h3 class="episode-title">max weber et le capitalisme</h3>
+                    <div class="episode-meta">
+                        <div class="episode-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg>
+                            21:58
+                        </div>
+                    </div>
+                    <div class="episode-actions">
+                        <audio controls class="audio-player">
+                            <source src="https://content.stucom.tech/isfsc/comb1/socio/podcasts/3-introduction-max-weber-et-le-capitalisme.mp3" type="audio/mpeg">
+                            Votre navigateur ne supporte pas l'élément audio.
+                        </audio>
+                        <div class="playback-controls">
+                            <div class="speed-control">
+                                <span class="speed-btn active" data-speed="1">1x</span>
+                                <span class="speed-btn" data-speed="1.25">1.25x</span>
+                                <span class="speed-btn" data-speed="1.5">1.5x</span>
+                                <span class="speed-btn" data-speed="1.75">1.75x</span>
+                            </div>
+                            <a href="https://content.stucom.tech/isfsc/comb1/socio/podcasts/3-introduction-max-weber-et-le-capitalisme.mp3" download class="download-button">
+                                <svg class="download-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                dl
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="episode">
+                <div class="episode-image">
+                    <span class="episode-number">04</span>
+                </div>
+                <div class="episode-content">
+                    <h3 class="episode-title">structurations modernes et traditionnelles</h3>
+                    <div class="episode-meta">
+                        <div class="episode-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg>
+                            18:30
+                        </div>
+                    </div>
+                    <div class="episode-actions">
+                        <audio controls class="audio-player">
+                            <source src="https://content.stucom.tech/isfsc/comb1/socio/podcasts/4-chapitre-1-structurations-modernes-et-traditionnelles.mp3" type="audio/mpeg">
+                            Votre navigateur ne supporte pas l'élément audio.
+                        </audio>
+                        <div class="playback-controls">
+                            <div class="speed-control">
+                                <span class="speed-btn active" data-speed="1">1x</span>
+                                <span class="speed-btn" data-speed="1.25">1.25x</span>
+                                <span class="speed-btn" data-speed="1.5">1.5x</span>
+                                <span class="speed-btn" data-speed="1.75">1.75x</span>
+                            </div>
+                            <a href="https://content.stucom.tech/isfsc/comb1/socio/podcasts/4-chapitre-1-structurations-modernes-et-traditionnelles.mp3" download class="download-button">
+                                <svg class="download-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                dl
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="episode">
+                <div class="episode-image">
+                    <span class="episode-number">05</span>
+                </div>
+                <div class="episode-content">
+                    <h3 class="episode-title">hypermodernité</h3>
+                    <div class="episode-meta">
+                        <div class="episode-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg>
+                            33:27
+                        </div>
+                    </div>
+                    <div class="episode-actions">
+                        <audio controls class="audio-player">
+                            <source src="https://content.stucom.tech/isfsc/comb1/socio/podcasts/5-chapitre-1-hypermodernite.mp3" type="audio/mpeg">
+                            Votre navigateur ne supporte pas l'élément audio.
+                        </audio>
+                        <div class="playback-controls">
+                            <div class="speed-control">
+                                <span class="speed-btn active" data-speed="1">1x</span>
+                                <span class="speed-btn" data-speed="1.25">1.25x</span>
+                                <span class="speed-btn" data-speed="1.5">1.5x</span>
+                                <span class="speed-btn" data-speed="1.75">1.75x</span>
+                            </div>
+                            <a href="https://content.stucom.tech/isfsc/comb1/socio/podcasts/5-chapitre-1-hypermodernite.mp3" download class="download-button">
+                                <svg class="download-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                dl
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="episode">
+                <div class="episode-image">
+                    <span class="episode-number">06</span>
+                </div>
+                <div class="episode-content">
+                    <h3 class="episode-title">ordre des interactions et habitus</h3>
+                    <div class="episode-meta">
+                        <div class="episode-duration">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg>
+                            34:00
+                        </div>
+                    </div>
+                    <div class="episode-actions">
+                        <audio controls class="audio-player">
+                            <source src="https://content.stucom.tech/isfsc/comb1/socio/podcasts/6-chapitre-2-ordre-des-interactions-et-habitus.mp3" type="audio/mpeg">
+                            Votre navigateur ne supporte pas l'élément audio.
+                        </audio>
+                        <div class="playback-controls">
+                            <div class="speed-control">
+                                <span class="speed-btn active" data-speed="1">1x</span>
+                                <span class="speed-btn" data-speed="1.25">1.25x</span>
+                                <span class="speed-btn" data-speed="1.5">1.5x</span>
+                                <span class="speed-btn" data-speed="1.75">1.75x</span>
+                            </div>
+                            <a href="https://content.stucom.tech/isfsc/comb1/socio/podcasts/6-chapitre-2-ordre-des-interactions-et-habitus.mp3" download class="download-button">
+                                <svg class="download-icon" viewBox="0 0 24 24" fill="currentColor">
