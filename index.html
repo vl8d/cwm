@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>podcasts</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --background: #0f0f0f;
+            --surface: #171717;
+            --surface-hover: #222222;
+            --primary: #8c52ff;
+            --primary-hover: #9d6aff;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+            --border: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-variant: small-caps;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            padding: 1rem 2rem;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-small {
+            height: 40px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border);
+            background-color: var(--surface);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(to bottom, #000000, var(--background));
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+        }
+
+        .logo {
+            width: 200px;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 20px rgba(140, 82, 255, 0.4));
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .collections {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .collection {
+            background-color: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid var(--border);
+            height: 100%;
+        }
+
+        .collection:hover {
+            background-color: var(--surface-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary);
+        }
+
+        .collection-image {
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, var(--primary), #444444);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .collection-icon {
+            font-size: 3rem;
+            opacity: 0.7;
+        }
+
+        .collection-content {
+            padding: 1.5rem;
+        }
+
+        .collection-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .collection-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .collection-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .collection-count {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        @media (max-width: 900px) {
+            .collections {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 0.8rem 1rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .collections {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="/">
+                <img src="/api/placeholder/150/40" alt="Logo" class="logo-small">
+            </a>
+            <div class="nav-menu">
+                <a href="/sociologie" class="nav-item">socio</a>
+                <a href="/economie-politique" class="nav-item">écopol</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <img src="/api/placeholder/200/200" alt="logo podcast" class="logo">
+        <h1 class="hero-title">podcasts académiques</h1>
+        <p class="hero-subtitle">explorez les différents concepts fondamentaux de certains de nos cours, avec Jules</p>
+    </section>
+
+    <div class="container">
+        <div class="collections">
+            <a href="/sociologie" class="collection">
+                <div class="collection-image">
+                    <span class="collection-icon">🔬</span>
+                </div>
+                <div class="collection-content">
+                    <h3 class="collection-title">sociologie</h3>
+                    <p class="collection-desc">découvrez les fondements théoriques et les grands penseurs qui ont façonné la discipline sociologique</p>
+                    <div class="collection-meta">
+                        <div class="collection-count">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg>
+                            6 épisodes
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="/economie-politique" class="collection">
+                <div class="collection-image">
+                    <span class="collection-icon">📊</span>
+                </div>
+                <div class="collection-content">
+                    <h3 class="collection-title">économie politique</h3>
+                    <p class="collection-desc">analysez les relations entre pouvoir économique et pouvoir politique dans une perspective critique</p>
+                    <div class="collection-meta">
+                        <div class="collection-count">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg>
+                            4 épisodes
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
