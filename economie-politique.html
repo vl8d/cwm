@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>économie politique - bientôt disponible</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --background: #0f0f0f;
+            --surface: #171717;
+            --surface-hover: #222222;
+            --primary: #8c52ff;
+            --primary-hover: #9d6aff;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+            --border: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-variant: small-caps;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            padding: 1rem 2rem;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-small {
+            height: 40px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border);
+            background-color: var(--surface);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(to bottom, #000000, var(--background));
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            width: 200px;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 20px rgba(140, 82, 255, 0.4));
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .coming-soon {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            color: var(--primary);
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 0.8rem 1rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="/">
+                <img src="https://content.stucom.tech/isfsc/comb1/podcasts/podcast-logo-short.jpg" alt="Logo" class="logo-small">
+            </a>
+            <div class="nav-menu">
+                <a href="/sociologie" class="nav-item">socio</a>
+                <a href="/economie-politique" class="nav-item active">écopol</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <img src="https://content.stucom.tech/isfsc/comb1/podcasts/podcast-logo-short.jpg" alt="logo podcast" class="logo">
+        <h1 class="hero-title">podcasts d'économie politique</h1>
+        <p class="hero-subtitle">une perspective critique sur les rapports entre pouvoir économique et politique</p>
+        <div class="coming-soon">bientôt disponible</div>
+    </section>
+</body>
+</html>
