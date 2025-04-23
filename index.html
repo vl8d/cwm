@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>podcasts</title>
+    <title>Contenus académiques</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet">
     <style>
         :root {
             --background: #0f0f0f;
-            --surface: #171717;
-            --surface-hover: #222222;
+            --surface: #1a1a1a;
+            --surface-hover: #252525;
             --primary: #8c52ff;
             --primary-hover: #9d6aff;
+            --primary-light: rgba(140, 82, 255, 0.1);
             --text: #ffffff;
             --text-secondary: #b3b3b3;
             --border: #333333;
+            --border-light: #444444;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -29,16 +32,16 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            font-variant: small-caps;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        /* Header simplifié */
         .header {
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
+            background-color: #000000;
             position: sticky;
             top: 0;
-            padding: 1rem 2rem;
+            padding: 0.8rem 2rem;
             z-index: 100;
             border-bottom: 1px solid var(--border);
         }
@@ -49,24 +52,60 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo-small {
-            height: 40px;
+            height: 36px;
+            z-index: 101;
+        }
+
+        /* Menu hamburger */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 101;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text);
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
         }
 
         .nav-menu {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .nav-item {
             text-decoration: none;
             color: var(--text);
-            padding: 0.5rem 1.5rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 50px;
-            font-size: 1rem;
-            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            transition: var(--transition);
             border: 1px solid var(--border);
             background-color: var(--surface);
         }
@@ -74,44 +113,47 @@
         .nav-item:hover, .nav-item.active {
             background-color: var(--primary);
             border-color: var(--primary);
-            transform: translateY(-2px);
         }
 
+        /* Section hero */
         .hero {
-            padding: 4rem 2rem;
+            padding: 3.5rem 2rem;
             text-align: center;
-            background: linear-gradient(to bottom, #000000, var(--background));
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 1rem 3rem;
+            background: var(--background);
         }
 
         .logo {
-            width: 200px;
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 0 20px rgba(140, 82, 255, 0.4));
+            width: 160px;
+            margin-bottom: 1.2rem;
+            filter: drop-shadow(0 0 15px rgba(140, 82, 255, 0.4));
         }
 
         .hero-title {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+            font-variant: small-caps;
         }
 
         .hero-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--text-secondary);
             max-width: 600px;
             margin: 0 auto 2rem;
+            font-variant: normal;
         }
 
+        /* Conteneur principal */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        /* Grille des contenus */
         .collections {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
             width: 100%;
         }
 
@@ -119,88 +161,119 @@
             background-color: var(--surface);
             border-radius: 12px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             text-decoration: none;
             color: var(--text);
             border: 1px solid var(--border);
-            height: 100%;
         }
 
         .collection:hover {
             background-color: var(--surface-hover);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            border-color: var(--primary);
+            border-color: var(--primary-light);
         }
 
         .collection-image {
             aspect-ratio: 16 / 9;
-            background: linear-gradient(135deg, var(--primary), #444444);
-            position: relative;
+            background: linear-gradient(135deg, var(--primary), #3a3a3a);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .collection-icon {
-            font-size: 3rem;
-            opacity: 0.7;
+            font-size: 2.8rem;
+            opacity: 0.8;
         }
 
         .collection-content {
-            padding: 1.5rem;
+            padding: 1.4rem;
         }
 
         .collection-title {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             margin-bottom: 0.8rem;
-            line-height: 1.4;
+            font-variant: small-caps;
         }
 
         .collection-desc {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
         }
 
         .collection-meta {
             display: flex;
             justify-content: space-between;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .collection-count {
-            display: flex;
+            font-size: 0.85rem;
             align-items: center;
-            gap: 5px;
         }
 
-        @media (max-width: 900px) {
-            .collections {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
+        .coming-soon {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            padding: 0.25rem 0.7rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
         }
 
-        @media (max-width: 600px) {
+        /* Mobile */
+        @media (max-width: 768px) {
             .header {
-                padding: 0.8rem 1rem;
+                padding: 0.7rem 1.5rem;
+            }
+            
+            .menu-toggle {
+                display: flex;
             }
 
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 280px;
+                height: 100vh;
+                background-color: var(--surface);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1.2rem;
+                padding: 1.5rem;
+                border-left: 1px solid var(--border);
+                z-index: 100;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-item {
+                width: 100%;
+                padding: 0.8rem;
+            }
+            
             .hero {
-                padding: 2rem 1rem;
+                padding: 2.5rem 1.5rem;
             }
-
+            
             .hero-title {
                 font-size: 1.8rem;
             }
-
-            .hero-subtitle {
-                font-size: 1rem;
+            
+            .logo {
+                width: 140px;
             }
+        }
 
+        @media (max-width: 480px) {
             .collections {
                 grid-template-columns: 1fr;
+            }
+            
+            .collection-content {
+                padding: 1.2rem;
             }
         }
     </style>
@@ -211,7 +284,14 @@
             <a href="/">
                 <img src="https://content.stucom.tech/isfsc/comb1/podcasts/logo-podcasts.png" alt="Logo" class="logo-small">
             </a>
-            <div class="nav-menu">
+            
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-menu" id="navMenu">
                 <a href="/sociologie" class="nav-item">socio</a>
                 <a href="/economie-politique" class="nav-item">écopol</a>
             </div>
@@ -219,9 +299,9 @@
     </header>
 
     <section class="hero">
-        <img src="https://content.stucom.tech/isfsc/comb1/podcasts/logo-podcasts.png" alt="logo podcast" class="logo">
-        <h1 class="hero-title">podcasts académiques</h1>
-        <p class="hero-subtitle">explorez les différents concepts fondamentaux de certains de nos cours, avec Jules</p>
+        <img src="https://content.stucom.tech/isfsc/comb1/podcasts/logo-podcasts.png" alt="Logo" class="logo">
+        <h1 class="hero-title">explorations académiques</h1>
+        <p class="hero-subtitle">Découvrez les concepts fondamentaux de nos cours à travers une série audio éducative</p>
     </section>
 
     <div class="container">
@@ -231,11 +311,11 @@
                     <span class="collection-icon">🔬</span>
                 </div>
                 <div class="collection-content">
-                    <h3 class="collection-title">sociologie</h3>
-                    <p class="collection-desc">découvrez les fondements théoriques et les grands penseurs qui ont façonné la discipline sociologique</p>
+                    <h3 class="collection-title">Sociologie</h3>
+                    <p class="collection-desc">Les fondements théoriques et les grands penseurs qui ont façonné cette discipline</p>
                     <div class="collection-meta">
                         <div class="collection-count">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
                             </svg>
                             6 épisodes
@@ -249,13 +329,10 @@
                     <span class="collection-icon">📊</span>
                 </div>
                 <div class="collection-content">
-                    <h3 class="collection-title">économie politique</h3>
-                    <p class="collection-desc">analysez les relations entre pouvoir économique et pouvoir politique dans une perspective critique</p>
+                    <h3 class="collection-title">Économie politique</h3>
+                    <p class="collection-desc">Relations entre pouvoir économique et pouvoir politique dans une perspective critique</p>
                     <div class="collection-meta">
-                        <div class="collection-count">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-                            </svg>
+                        <div class="coming-soon">
                             bientôt disponible
                         </div>
                     </div>
@@ -263,5 +340,29 @@
             </a>
         </div>
     </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+        
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
 </body>
 </html>
