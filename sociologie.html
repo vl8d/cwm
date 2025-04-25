@@ -91,10 +91,16 @@
         }
 
         .logo {
-    width: 200px;
-    margin-bottom: 1.5rem;
-    filter: drop-shadow(0 0 40px rgba(140, 82, 255, 0.8));
-    box-shadow: 0 0 20px rgba(140, 82, 255, 0.6), 0 0 50px rgba(140, 82, 255, 0.5); 
+            width: 200px;
+            margin-bottom: 1.5rem;
+
+            filter: drop-shadow(0 0 10px rgba(140, 82, 255, 0.8))
+            drop-shadow(0 0 20px rgba(140, 82, 255, 0.6));
+
+            mask: url('https://content.stucom.tech/isfsc/comb1/podcasts/logo/socio.svg') no-repeat center;
+            -webkit-mask: url('https://content.stucom.tech/isfsc/comb1/podcasts/logo/socio.svg') no-repeat center;
+            mask-size: contain;
+            -webkit-mask-size: contain;
         }
 
         .hero-title {
