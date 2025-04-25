@@ -11,8 +11,12 @@
             --background: #0f0f0f;
             --surface: #171717;
             --surface-hover: #222222;
-            --primary: #8c52ff;
-            --primary-hover: #9d6aff;
+            --primary: #ec1c24; /* Rouge pour les boutons de navigation */
+            --primary-hover: #ff3b44; /* Rouge clair pour le hover des boutons de navigation */
+            --sociologie-color: #8c52ff; /* Mauve pour Sociologie */
+            --sociologie-hover: #9d6aff; /* Mauve clair pour le hover de Sociologie */
+            --ecopol-color: #002EFF; /* Bleu pour Économie politique */
+            --ecopol-hover: #334bff; /* Bleu clair pour le hover de Économie politique */
             --text: #ffffff;
             --text-secondary: #b3b3b3;
             --border: #333333;
@@ -32,6 +36,9 @@
             padding: 0;
             font-variant: small-caps;
             line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         .header {
@@ -69,12 +76,12 @@
             font-size: 1rem;
             transition: all 0.2s ease;
             border: 1px solid var(--border);
-            background-color: var(--surface);
+            background-color: var(--primary); /* Rouge pour les boutons de navigation */
         }
 
         .nav-item:hover, .nav-item.active {
-            background-color: var(--primary);
-            border-color: var(--primary);
+            background-color: var(--primary-hover); /* Rouge clair pour le hover des boutons de navigation */
+            border-color: var(--primary-hover); /* Rouge clair pour le hover des boutons de navigation */
             transform: translateY(-2px);
         }
 
@@ -82,7 +89,7 @@
             padding: 4rem 2rem;
             text-align: center;
             background: linear-gradient(to bottom, #000000, var(--background));
-            min-height: 80vh;
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -112,6 +119,7 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 0 1.5rem 3rem;
+            flex: 1;
         }
 
         .collections {
@@ -135,12 +143,10 @@
             background-color: var(--surface-hover);
             transform: translateY(-4px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            border-color: var(--primary);
         }
 
         .collection-image {
             aspect-ratio: 16 / 9;
-            background: linear-gradient(135deg, var(--primary), #444444);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -182,6 +188,24 @@
             padding: 0.25rem 0.7rem;
             border-radius: 50px;
             font-size: 0.8rem;
+        }
+
+        /* Styles spécifiques pour Sociologie */
+        .collection.sociologie .collection-image {
+            background: linear-gradient(135deg, var(--sociologie-color), #444444);
+        }
+
+        .collection.sociologie:hover {
+            border-color: var(--sociologie-hover);
+        }
+
+        /* Styles spécifiques pour Économie politique */
+        .collection.ecopol .collection-image {
+            background: linear-gradient(135deg, var(--ecopol-color), #444444);
+        }
+
+        .collection.ecopol:hover {
+            border-color: var(--ecopol-hover);
         }
 
         @media (max-width: 768px) {
@@ -249,7 +273,7 @@
 
     <div class="container">
         <div class="collections">
-            <a href="/sociologie" class="collection">
+            <a href="/sociologie" class="collection sociologie">
                 <div class="collection-image">
                     <span class="collection-icon">🔬</span>
                 </div>
@@ -267,7 +291,7 @@
                 </div>
             </a>
 
-            <a href="/economie-politique" class="collection">
+            <a href="/economie-politique" class="collection ecopol">
                 <div class="collection-image">
                     <span class="collection-icon">📊</span>
                 </div>
